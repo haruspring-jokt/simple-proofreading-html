@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8" />
+    <title>proofreadingAPI</title>
+</head>
+
+<body>
+    <form>
+        <div>
+            <label for="">APIキー: </label>
+        </div>
+        <div>
+            <input id="apikey" type="password" size="40" value="" />
+        </div>
+        <div>
+            <label for="">チェックしたい文: </label>
+        </div>
+        <div>
+            <textarea id="sentence" name="sentence" rows="10" cols="50"></textarea>
+        </div>
+        <div>
+            <label for="">チェック感度: </label>
+        </div>
+        <div>
+            <select id="sensitivity" name="sensitivity">
+                <option value="low">low</option>
+                <option value="medium" selected>medium</option>
+                <option value="high">high</option>
+            </select>
+        </div>
+        <div>
+            <input id="check" type="button" value="check!" />
+        </div>
+        <div>
+            <label for="result">結果：</label>
+            <p id="result"></p>
+        </div>
+    </form>
+    <script src="https://code.jquery.com/jquery-3.3.1.js"></script>
+    <script>
+        $(function () {
+            $('#check').click(function () {
+                $.getJSON('https://api.a3rt.recruit-tech.co.jp/proofreading/v2/typo?callback=?', {
+                        apikey: $('#apikey').val(),
+                        sentence: $('#sentence').val(),
+                        sensitivity: $('#sensitivity').val()
+                    })
+                    // 結果を取得したら…
+                    .done(function (data) {
+                        $('#result').text(data.message);
+                    });
+            });
+        });
+    </script>
+</body>
+
+</html>
